@@ -43,6 +43,7 @@ class ActionOpenCanEnv : ActionContinuousBase
 	override void OnFinishProgressServer(ActionData action_data)
 	{
 		float loss = Math.RandomFloatInclusive(MIN_LOSS, MAX_LOSS);
+		action_data.m_MainItem.SetHealth(1);
 		OpenItem.SwitchItems(action_data.m_MainItem, action_data.m_Player, loss, m_SpecialtyWeight);
 	}
 };
