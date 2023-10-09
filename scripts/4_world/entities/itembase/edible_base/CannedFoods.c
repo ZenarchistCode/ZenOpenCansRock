@@ -1,3 +1,4 @@
+// VANILLA FOOD
 modded class BakedBeansCan : Edible_Base
 {
 	override void SetActions()

@@ -41,3 +41,16 @@ class CfgMods
 		}
 	};
 };
+
+class CfgVehicles
+{
+	class Inventory_Base;
+	class SmallStone : Inventory_Base
+	{
+		openItemSpillRange[] = { 50,75 };
+	};
+	class Stone : Inventory_Base
+	{
+		openItemSpillRange[] = { 70,90 };
+	};
+}

@@ -15,7 +15,6 @@ class ActionOpenCanEnv : ActionContinuousBase
 
 	void ActionOpenCanEnv()
 	{
-
 		m_CallbackClass = ActionOpenCanEnvCB;
 		m_CommandUID = DayZPlayerConstants.CMD_ACTIONFB_ASSEMBLE;
 		m_FullBody = true;
@@ -45,5 +44,34 @@ class ActionOpenCanEnv : ActionContinuousBase
 		float loss = Math.RandomFloatInclusive(MIN_LOSS, MAX_LOSS);
 		action_data.m_MainItem.SetHealth(1);
 		OpenItem.SwitchItems(action_data.m_MainItem, action_data.m_Player, loss, m_SpecialtyWeight);
+	}
+
+	override void OnStartAnimationLoop( ActionData action_data )
+	{
+		super.OnStartAnimationLoop( action_data );
+
+		if ( !GetGame().IsMultiplayer() || GetGame().IsServer() )
+		{
+			Param2<bool, string> play = new Param2<bool, string>( true, "minePickAxe_SoundSet" );
+			GetGame().RPCSingleParam( action_data.m_MainItem, ERPCs.RPC_SOUND_LOCK_ATTACH, play, true );
+		}
+	}
+	
+	override void OnEnd( ActionData action_data )
+	{
+		if ( !GetGame().IsMultiplayer() || GetGame().IsServer() )
+		{
+			Param2<bool, string> play = new Param2<bool, string>( false, "minePickAxe_SoundSet" );
+			GetGame().RPCSingleParam( action_data.m_MainItem, ERPCs.RPC_SOUND_LOCK_ATTACH, play, true );
+		}
+	}
+	
+	override void OnEndAnimationLoop( ActionData action_data )
+	{
+		if ( !GetGame().IsMultiplayer() || GetGame().IsServer() )
+		{
+			Param2<bool, string> play = new Param2<bool, string>( false, "minePickAxe_SoundSet" );
+			GetGame().RPCSingleParam( action_data.m_MainItem, ERPCs.RPC_SOUND_LOCK_ATTACH, play, true );
+		}
 	}
 };
